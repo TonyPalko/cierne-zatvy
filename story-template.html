@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ═══════════════════════════════════════════════════
+         ZMEŇ: Názov príbehu v <title> a <meta description>
+    ═══════════════════════════════════════════════════ -->
+    <title>Názov príbehu — Čierne žatvy</title>
+    <meta name="description" content="Krátky popis príbehu pre zdieľanie na sociálnych sieťach.">
+    <style>
+        :root {
+            --bg: #F8F7F5;
+            --surface: #FFFFFF;
+            --text: #1A1A1A;
+            --text-2: #4A4A4A;
+            --text-3: #8A8A8A;
+            --accent: #8B1A1A;
+            --accent-pale: #F4ECEC;
+            --border: #E8E5E0;
+            --dark: #171717;
+            --reading-max: 680px;
+            --shadow-xs: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.05);
+            --r: 14px;
+            --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            --serif: 'Georgia', 'Times New Roman', serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── NAVIGATION ──────────────────────────────── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            background: rgba(248, 247, 245, 0.88);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .nav-back:hover { color: var(--accent); }
+        .nav-back svg { width: 16px; height: 16px; }
+
+        .nav-brand {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: var(--dark);
+            text-decoration: none;
+        }
+        .nav-brand em { color: var(--accent); font-style: normal; }
+
+        /* ── STORY HEADER ────────────────────────────── */
+        .story-header {
+            max-width: var(--reading-max);
+            margin: 0 auto;
+            padding: 64px 32px 48px;
+        }
+
+        .story-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+        .chip {
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 6px;
+        }
+        .chip-horror { background: var(--accent-pale); color: var(--accent); }
+        .chip-type   { background: var(--dark); color: rgba(255,255,255,0.75); }
+
+        .story-title {
+            font-family: var(--serif);
+            font-size: clamp(30px, 5vw, 46px);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .story-meta-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            color: var(--text-3);
+        }
+        .meta svg { width: 14px; height: 14px; opacity: 0.65; }
+
+        /* Download button */
+        .btn-download {
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            background: var(--dark);
+            color: rgba(255,255,255,0.9);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.18s, transform 0.18s;
+        }
+        .btn-download:hover {
+            background: var(--accent);
+            transform: translateY(-1px);
+        }
+        .btn-download svg { width: 14px; height: 14px; }
+
+        /* ── STORY CONTENT ───────────────────────────── */
+        .story-content {
+            max-width: var(--reading-max);
+            margin: 0 auto;
+            padding: 48px 32px 64px;
+        }
+
+        /* Typography for the story itself */
+        .story-body {
+            font-family: var(--serif);
+            font-size: 18.5px;
+            line-height: 1.85;
+            color: #2A2A2A;
+        }
+
+        .story-body p {
+            margin-bottom: 1.65em;
+        }
+
+        .story-body p:first-child::first-letter {
+            font-size: 3.4em;
+            font-weight: 700;
+            float: left;
+            line-height: 0.82;
+            margin: 4px 10px 0 0;
+            color: var(--accent);
+            font-family: var(--serif);
+        }
+
+        .story-body h2 {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin: 3em 0 1.5em;
+            text-align: center;
+        }
+
+        .story-body blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 4px 0 4px 22px;
+            margin: 2em 0;
+            font-style: italic;
+            color: var(--text-2);
+        }
+
+        .story-body hr {
+            border: none;
+            text-align: center;
+            margin: 2.5em 0;
+            color: var(--text-3);
+            font-size: 18px;
+            letter-spacing: 12px;
+        }
+        .story-body hr::before {
+            content: 'u2726  u2726  u2726';
+        }
+
+        /* ── STORY END ───────────────────────────────── */
+        .story-end {
+            max-width: var(--reading-max);
+            margin: 0 auto;
+            padding: 0 32px 80px;
+        }
+
+        .end-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .end-divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        .end-divider span {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-3);
+            white-space: nowrap;
+        }
+
+        /* Back / Next navigation */
+        .story-nav-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 56px;
+        }
+
+        .story-nav-link {
+            display: block;
+            padding: 16px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow-xs);
+            transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+        }
+        .story-nav-link:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: rgba(139, 26, 26, 0.2);
+        }
+        .story-nav-link.next { text-align: right; }
+
+        .nav-link-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 5px;
+        }
+        .nav-link-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* ── COMMENTS ────────────────────────────────── */
+        .comments-section {
+            margin-top: 8px;
+        }
+
+        .comments-title {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: var(--dark);
+            margin-bottom: 24px;
+        }
+
+        /* Giscus wrapper */
+        #giscus-wrapper {
+            background: var(--surface);
+            border-radius: var(--r);
+            border: 1px solid var(--border);
+            padding: 24px;
+            box-shadow: var(--shadow-xs);
+        }
+
+        /* ── FOOTER ──────────────────────────────────── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 32px;
+        }
+        .footer-inner {
+            max-width: var(--reading-max);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        footer p { font-size: 13px; color: var(--text-3); }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            .story-header, .story-content, .story-end { padding-left: 20px; padding-right: 20px; }
+            .story-title { font-size: 26px; }
+            .story-body { font-size: 17px; }
+            .btn-download { margin-left: 0; }
+            .story-nav-links { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <a href="index.html" class="nav-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Všetky diela
+    </a>
+    <a href="index.html" class="nav-brand">Čierne žatvy<em>.</em></a>
+</nav>
+
+<!-- STORY HEADER -->
+<header class="story-header">
+    <div class="story-chips">
+        <!-- ZMEŇ: žánre a typ -->
+        <span class="chip chip-horror">Survival Horror</span>
+        <span class="chip chip-type">Novela</span>
+    </div>
+
+    <!-- ZMEŇ: Nadpis príbehu -->
+    <h1 class="story-title">Názov tvojho príbehu</h1>
+
+    <div class="story-meta-row">
+        <span class="meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <!-- ZMEŇ: dátum -->
+            Január 2026
+        </span>
+        <span class="meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <!-- ZMEŇ: čas čítania -->
+            ~25 min čítania
+        </span>
+        <span class="meta" id="view-count-el">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>načítavam...</span>
+        </span>
+
+        <!-- ZMEŇ: href na PDF súbor na stiahnutie (napr. "pribeh-1.pdf") -->
+        <a href="prvy-pribeh.pdf" class="btn-download" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Stiahnuť PDF
+        </a>
+    </div>
+</header>
+
+<!-- STORY CONTENT -->
+<main class="story-content">
+    <article class="story-body">
+
+        <!-- ═══════════════════════════════════════════════
+             TU ZAČÍNA PRÍBEH
+             Každý odstavec = <p>...</p>
+             Oddeľovač kapitol = <hr>
+             Nadpis kapitoly = <h2>Kapitola I</h2>
+             Citát / atmosferický text = <blockquote>...</blockquote>
+        ═══════════════════════════════════════════════ -->
+
+        <p>
+            Toto je prvý odstavec tvojho príbehu. Prvé písmeno bude automaticky
+            zvýraznené — veľké, červené, knižné. Napíš sem úvod deja — miesto,
+            čas, prvý pocit hrozby.
+        </p>
+
+        <p>
+            Druhý odstavec. Pokračuj v atmosfére. Každý odstavec sem vkladaj
+            ako samostatný blok medzi značky &lt;p&gt; a &lt;/p&gt;.
+        </p>
+
+        <p>
+            Môžeš písať tak dlho, koľko chceš. Text sa automaticky zarovná,
+            riadkovanie bude príjemné pre čítanie, a stránka bude fungovať
+            aj na mobile.
+        </p>
+
+        <hr>
+
+        <h2>Kapitola II</h2>
+
+        <p>
+            Nová kapitola. Ak chceš oddeliť časti príbehu, použi buď
+            &lt;hr&gt; (tri hviezdy) alebo
+            &lt;h2&gt;Nadpis kapitoly&lt;/h2&gt;.
+        </p>
+
+        <blockquote>
+            "Citáty alebo vnútorný monológ postáv môžeš formátovať
+            pomocou blockquote. Automaticky dostanú červenú zvislú čiaru
+            na ľavej strane."
+        </blockquote>
+
+        <p>
+            A príbeh pokračuje...
+        </p>
+
+        <!-- ═══════════════════════════════════════════
+             TU KONČÍ PRÍBEH
+        ═══════════════════════════════════════════ -->
+
+    </article>
+</main>
+
+<!-- STORY END — navigácia medzi príbehmi + komentáre -->
+<section class="story-end">
+
+    <div class="end-divider">
+        <div class="end-divider-line"></div>
+        <span>Koniec príbehu</span>
+        <div class="end-divider-line"></div>
+    </div>
+
+    <!-- Navigácia: predchádzajúci / ďalší príbeh -->
+    <!-- ZMEŇ: href a názvy príbehov. Ak nie je predchádzajúci, vymaž prvý blok. -->
+    <nav class="story-nav-links" aria-label="Ďalšie príbehy">
+        <a href="index.html" class="story-nav-link prev">
+            <div class="nav-link-label">← Späť</div>
+            <div class="nav-link-title">Všetky diela</div>
+        </a>
+        <a href="druhy-pribeh.html" class="story-nav-link next">
+            <div class="nav-link-label">Ďalší príbeh →</div>
+            <div class="nav-link-title">Názov druhého príbehu</div>
+        </a>
+    </nav>
+
+    <!-- KOMENTÁRE (Giscus) -->
+    <div class="comments-section">
+        <div class="comments-title">Komentáre</div>
+        <div id="giscus-wrapper">
+            <p style="font-size:14px; color: #8A8A8A; text-align:center; padding: 24px 0; font-family: Georgia, serif; font-style: italic;">
+                Komentáre sa načítajú po nastavení Giscus.<br>
+                Pozri pokyny v súbore NASADENIE.md.
+            </p>
+        </div>
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <p>© 2026 Tony Palko · <a href="mailto:tony.palko@icloud.com">tony.palko@icloud.com</a> · <a href="https://instagram.com/cierne_zatvy" target="_blank">@cierne_zatvy</a></p>
+        <p><a href="index.html">← Späť na všetky príbehy</a></p>
+    </div>
+</footer>
+
+<script>
+    const NAMESPACE  = 'cierne-zatvy-2026';
+    const STORY_KEY  = 'prvy-pribeh';
+
+    (async () => {
+        try {
+            const res  = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${STORY_KEY}`);
+            const data = await res.json();
+            const count = data.value ?? 0;
+            const el = document.querySelector('#view-count-el span');
+            if (el) el.textContent = count.toLocaleString('sk') + ' zobrazení';
+        } catch {
+            const el = document.querySelector('#view-count-el span');
+            if (el) el.textContent = '— zobrazení';
+        }
+    })();
+</script>
+
+</body>
+</html>
