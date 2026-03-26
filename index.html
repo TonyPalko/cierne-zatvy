@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Čierne žatvy — Príbehy</title>
+    <meta name="description" content="Zbierka survival horrorových poviedok a noviel od Tonyho Palka.">
+    <style>
+        :root {
+            --bg: #F8F7F5;
+            --surface: #FFFFFF;
+            --text: #1A1A1A;
+            --text-2: #4A4A4A;
+            --text-3: #8A8A8A;
+            --accent: #8B1A1A;
+            --accent-pale: #F4ECEC;
+            --border: #E8E5E0;
+            --dark: #171717;
+            --shadow-xs: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.05);
+            --r: 14px;
+            --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            --serif: 'Georgia', 'Times New Roman', serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ── NAVIGATION ────────────────────────────────── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            background: rgba(248, 247, 245, 0.88);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-brand {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: var(--dark);
+            text-decoration: none;
+        }
+        .nav-brand em {
+            color: var(--accent);
+            font-style: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-2);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .nav-links a:hover { color: var(--dark); }
+
+        /* ── HERO ──────────────────────────────────────── */
+        .hero {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 88px 32px 64px;
+        }
+
+        .hero-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            color: var(--dark);
+            margin-bottom: 22px;
+        }
+
+        .hero h1 .line-2 {
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-family: var(--serif);
+            font-size: 18px;
+            line-height: 1.75;
+            color: var(--text-2);
+            max-width: 500px;
+            margin-bottom: 36px;
+        }
+
+        .hero-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .hero-divider-line {
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+        }
+        .hero-divider span {
+            font-size: 12px;
+            color: var(--text-3);
+            font-family: var(--serif);
+            font-style: italic;
+        }
+
+        /* ── STORIES ───────────────────────────────────── */
+        .stories {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 16px 32px 96px;
+        }
+
+        .stories-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+        .stories-title {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--text-3);
+        }
+        .stories-total {
+            font-size: 13px;
+            color: var(--text-3);
+        }
+
+        .story-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* ── CARD ──────────────────────────────────────── */
+        .card {
+            display: flex;
+            align-items: stretch;
+            background: var(--surface);
+            border-radius: var(--r);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-xs);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: box-shadow 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
+        }
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: rgba(139, 26, 26, 0.18);
+        }
+
+        .card-accent {
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent) 0%, var(--dark) 100%);
+            flex-shrink: 0;
+        }
+
+        .card-body {
+            flex: 1;
+            padding: 22px 24px;
+            min-width: 0;
+        }
+
+        .card-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 12px;
+        }
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 6px;
+        }
+        .chip-horror {
+            background: var(--accent-pale);
+            color: var(--accent);
+        }
+        .chip-type {
+            background: var(--dark);
+            color: rgba(255,255,255,0.75);
+        }
+        .chip-new {
+            background: #E8F4E8;
+            color: #2A6E2A;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.45px;
+            line-height: 1.2;
+            color: var(--dark);
+            margin-bottom: 9px;
+        }
+
+        .card-excerpt {
+            font-family: var(--serif);
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-2);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--text-3);
+        }
+        .meta svg {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+            opacity: 0.65;
+        }
+
+        .card-cta {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            flex-shrink: 0;
+            transition: gap 0.18s;
+        }
+        .card:hover .card-cta { gap: 9px; }
+
+        /* ── FEATURED CARD ─────────────────────────────── */
+        .card.featured .card-title { font-size: 24px; }
+        .card.featured .card-excerpt { -webkit-line-clamp: 3; }
+
+        /* ── FOOTER ────────────────────────────────────── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 36px 32px;
+        }
+        .footer-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        footer p {
+            font-size: 13px;
+            color: var(--text-3);
+        }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .footer-ornament {
+            font-family: var(--serif);
+            font-size: 18px;
+            color: var(--border);
+            letter-spacing: 4px;
+        }
+
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            .hero { padding: 56px 20px 40px; }
+            .stories { padding: 16px 20px 64px; }
+            .card-body { padding: 18px 18px; }
+            .card-title { font-size: 17px; }
+            .card.featured .card-title { font-size: 19px; }
+            .footer-inner { flex-direction: column; text-align: center; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <a href="index.html" class="nav-brand">Čierne žatvy<em>.</em></a>
+    <ul class="nav-links">
+        <li><a href="#diela">Diela</a></li>
+        <li><a href="o-mne.html">O mne</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-eyebrow">Survival Horror · Poviedky &amp; Novely</div>
+    <h1>
+        Príbehy, kde<br>
+        <span class="line-2">temnota hovorí.</span>
+    </h1>
+    <p class="hero-desc">
+        Zbierka poviedok a noviel. Každý príbeh je pozvaním
+        do sveta, kde strach má meno a únikové cesty sa
+        zatvárajú samy od seba.
+    </p>
+    <div class="hero-divider">
+        <div class="hero-divider-line"></div>
+        <span>scroll a čítaj</span>
+    </div>
+</section>
+
+<!-- STORY LIST -->
+<section class="stories" id="diela">
+
+    <div class="stories-header">
+        <span class="stories-title">Všetky diela</span>
+        <span class="stories-total">3 diel</span>
+    </div>
+
+    <div class="story-list">
+
+        <!-- ════════════════════════════════════════
+             KARTA 1 — Featured (prvý/najdôležitejší príbeh)
+             Zmeň: href, nadpis, popis, čas čítania
+        ════════════════════════════════════════ -->
+        <a href="prvy-pribeh.html" class="card featured">
+            <div class="card-accent"></div>
+            <div class="card-body">
+                <div class="card-chips">
+                    <span class="chip chip-horror">Survival Horror</span>
+                    <span class="chip chip-type">Novela</span>
+                    <span class="chip chip-new">Nové</span>
+                </div>
+                <div class="card-title">Názov tvojho prvého príbehu</div>
+                <div class="card-excerpt">
+                    Tu napíš krátky popis príbehu — 2 až 3 vety, ktoré navnadí čitateľa.
+                    Atmosféra, miesto, hlavný hrdina alebo záhada, ktorá ho vťahuje do deja.
+                    Nič neodkrývaj — len naznač.
+                </div>
+                <div class="card-footer">
+                    <span class="meta">
+                        <!-- Hodiny ikona -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        ~25 min čítania
+                    </span>
+                    <span class="meta" id="views-story-1">
+                        <!-- Oko ikona -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <span>načítavam...</span>
+                    </span>
+                    <span class="meta" id="comments-story-1">
+                        <!-- Komentár ikona -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <span>— komentárov</span>
+                    </span>
+                    <span class="card-cta">Čítať →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- ════════════════════════════════════════
+             KARTA 2
+        ════════════════════════════════════════ -->
+        <a href="druhy-pribeh.html" class="card">
+            <div class="card-accent"></div>
+            <div class="card-body">
+                <div class="card-chips">
+                    <span class="chip chip-horror">Survival Horror</span>
+                    <span class="chip chip-type">Poviedka</span>
+                </div>
+                <div class="card-title">Názov druhého príbehu</div>
+                <div class="card-excerpt">
+                    Krátky popis druhého príbehu. Čo čitateľa čaká —
+                    napätie, miesto deja, atmosféra.
+                </div>
+                <div class="card-footer">
+                    <span class="meta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        ~10 min čítania
+                    </span>
+                    <span class="meta" id="views-story-2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <span>načítavam...</span>
+                    </span>
+                    <span class="card-cta">Čítať →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- ════════════════════════════════════════
+             KARTA 3
+        ════════════════════════════════════════ -->
+        <a href="treti-pribeh.html" class="card">
+            <div class="card-accent"></div>
+            <div class="card-body">
+                <div class="card-chips">
+                    <span class="chip chip-horror">Psychologický horor</span>
+                    <span class="chip chip-type">Poviedka</span>
+                </div>
+                <div class="card-title">Názov tretieho príbehu</div>
+                <div class="card-excerpt">
+                    Stručný úryvok alebo popis. Čo čitateľovi vstúpi pod kožu.
+                </div>
+                <div class="card-footer">
+                    <span class="meta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        ~8 min čítania
+                    </span>
+                    <span class="meta" id="views-story-3">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <span>načítavam...</span>
+                    </span>
+                    <span class="card-cta">Čítať →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- ════════════════════════════════════════
+             PRIDAJ ĎALŠIE KARTY TU
+             Skopíruj blok <a href="..."> až </a>
+             a zmeň obsah.
+        ════════════════════════════════════════ -->
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <p>© 2026 Tony Palko · Všetky práva vyhradené</p>
+        <div class="footer-ornament">✦ ✦ ✦</div>
+        <p><a href="mailto:tony.palko@icloud.com">tony.palko@icloud.com</a> · <a href="https://instagram.com/cierne_zatvy" target="_blank">@cierne_zatvy</a></p>
+    </div>
+</footer>
+
+<!-- ════════════════════════════════════════════
+     VIEW COUNTER
+     Používa bezplatné API na čítanie počtu zobrazení.
+     Zmeň NAMESPACE na niečo unikátne (napr. tvoje meno).
+     API: https://api.countapi.xyz
+════════════════════════════════════════════ -->
+<script>
+    const NAMESPACE = 'cierne-zatvy-2026';
+
+    const stories = [
+        { id: 'story-1', key: 'prvy-pribeh' },
+        { id: 'story-2', key: 'druhy-pribeh' },
+        { id: 'story-3', key: 'treti-pribeh' },
+    ];
+
+    stories.forEach(async ({ id, key }) => {
+        try {
+            const res = await fetch(`https://api.countapi.xyz/get/${NAMESPACE}/${key}`);
+            const data = await res.json();
+            const count = data.value ?? 0;
+            const el = document.querySelector(`#views-${id} span`);
+            if (el) el.textContent = count.toLocaleString('sk') + ' zobrazení';
+        } catch {
+            const el = document.querySelector(`#views-${id} span`);
+            if (el) el.textContent = '— zobrazení';
+        }
+    });
+</script>
+
+</body>
+</html>
